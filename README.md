@@ -1,2 +1,2 @@
 # 2022-Demobot
-Use 364 Base Falcon Swerve
+Uses 364 Base Falcon Swerve -- https://github.com/Team364/BaseFalconSwerve
