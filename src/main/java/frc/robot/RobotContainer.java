@@ -31,6 +31,7 @@ public class RobotContainer {
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, 4);
+  private final JoystickButton defenseButton = new JoystickButton(driver, 2);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -55,6 +56,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    defenseButton.whenPressed(new DefenseModeCommand(s_Swerve, true));
+    defenseButton.whenReleased(new DefenseModeCommand(s_Swerve, false));
+
   }
 
   /**

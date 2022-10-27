@@ -20,6 +20,8 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public PigeonIMU gyro;
 
+    private boolean defenseMode = false; //true makes the modules go in an x pattern: 45, 315, 315, 45
+
     public Swerve() {
         gyro = new PigeonIMU(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
@@ -50,6 +52,14 @@ public class Swerve extends SubsystemBase {
                                     rotation)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+        
+        if (defenseMode) {
+            swerveModuleStates[0] = new SwerveModuleState(0.1, Rotation2d.fromDegrees(45));
+            swerveModuleStates[1] = new SwerveModuleState(0.1, Rotation2d.fromDegrees(315));
+            swerveModuleStates[2] = new SwerveModuleState(0.1, Rotation2d.fromDegrees(315));
+            swerveModuleStates[3] = new SwerveModuleState(0.1, Rotation2d.fromDegrees(45));
+        }
+
 
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
@@ -89,6 +99,10 @@ public class Swerve extends SubsystemBase {
         double[] ypr = new double[3];
         gyro.getYawPitchRoll(ypr);
         return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - ypr[0]) : Rotation2d.fromDegrees(ypr[0]);
+    }
+
+    public void setDefenseMode(boolean mode) {
+        defenseMode = mode;
     }
 
     @Override
