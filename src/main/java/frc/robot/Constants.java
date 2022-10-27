@@ -135,4 +135,20 @@ public final class Constants {
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
       }
 
+    public static final class JoystickConstants {
+
+        public static final class Driver {
+            public static final int driverPort = 0;
+            
+            public static final int zeroGyro = 4;
+            public static final int defenseMode = 2;
+        }
+        
+        public static final class Secondary {
+            public static final int secondaryPort = 1;
+            
+            public static final int intakeAndArm = 1;
+        }
+    }
+
 }
