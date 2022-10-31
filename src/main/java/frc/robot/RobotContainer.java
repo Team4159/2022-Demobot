@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Swerve;
+import frc.robot.Constants.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,7 +24,8 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   /* Controllers */
-  private final Joystick driver = new Joystick(0);
+  private final Joystick driver = new Joystick(JoystickConstants.Driver.driverPort);
+  private final Joystick secondary = new Joystick(JoystickConstants.Secondary.secondaryPort);
 
   /* Drive Controls */
   private final int translationAxis = driver.getYChannel();
@@ -30,7 +33,8 @@ public class RobotContainer {
   private final int rotationAxis = driver.getZChannel();
 
   /* Driver Buttons */
-  private final JoystickButton zeroGyro = new JoystickButton(driver, 4);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, JoystickConstants.Driver.zeroGyro);
+  private final JoystickButton defenseButton = new JoystickButton(driver, JoystickConstants.Driver.driverPort);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -55,6 +59,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    defenseButton.whenPressed(new DefenseModeCommand(s_Swerve, true));
+    defenseButton.whenReleased(new DefenseModeCommand(s_Swerve, false));
+
   }
 
   /**
