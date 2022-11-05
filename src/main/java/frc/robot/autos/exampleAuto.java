@@ -20,7 +20,7 @@ public class exampleAuto extends SequentialCommandGroup {
     private Trajectory trajectory = null;
     {
         try {
-            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("Autos/Test");
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve("paths/Default1.wpilib.json");
             trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
         } catch (IOException e) {
             DriverStation.reportError("Unable to open trajectory", e.getStackTrace());
