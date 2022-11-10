@@ -14,6 +14,7 @@ import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.ArmIntake.ArmState;
 import frc.robot.Constants.*;
 
 /**
@@ -36,8 +37,12 @@ public class RobotContainer {
   private final JoystickButton zeroGyro = new JoystickButton(driver, JoystickConstants.Driver.zeroGyro);
   private final JoystickButton defenseButton = new JoystickButton(driver, JoystickConstants.Driver.driverPort);
 
+  /* Secondardy Buttons */
+  private final JoystickButton lowerArm = new JoystickButton(secondary, JoystickConstants.Secondary.intakeAndArm);
+
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
+  private final ArmIntake s_ArmIntake = new ArmIntake();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -59,8 +64,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
+
     defenseButton.whenPressed(new DefenseModeCommand(s_Swerve, true));
     defenseButton.whenReleased(new DefenseModeCommand(s_Swerve, false));
+
+    lowerArm.whenPressed(new SetArmState(s_ArmIntake, ArmState.LOW));
+    lowerArm.whenPressed(new SetArmState(s_ArmIntake, ArmState.HIGH));
 
   }
 
