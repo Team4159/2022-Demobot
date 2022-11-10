@@ -148,6 +148,8 @@ public final class Constants {
             public static final int secondaryPort = 1;
             
             public static final int intakeAndArm = 1;
+
+            public static final int raiseClimber = 2;
         }
     }
 
@@ -168,6 +170,39 @@ public final class Constants {
 
         public static final double rollerForwardSpeed = 1;
         public static final double rollerBackwardSpeed = -1;
+
+    }
+
+    public static final class ClimberConstants {
+
+        public static final int leftSparkID = 9;
+        public static final int rightSparkID = 10;
+
+        public static final boolean leftSparkInverted = false;
+        public static final boolean rightSparkInverted = false;
+
+        public static final double armkp = 0;
+        public static final double armki = 0;
+        public static final double armkd = 0;
+
+        public static final double armDownSetpoint = 0;
+        public static final double armLowSetpoint = 0;
+        public static final double armHighSetpoint = 0;
+        
+
+        public static final int leftTalonID = 11;
+        public static final int rightTalonID = 12;
+
+        public static final boolean leftTalonInverted = false;
+        public static final boolean rightTalonInverted = false;
+        
+        public static final double elevatorkp = 0;
+        public static final double elevatorki = 0;
+        public static final double elevatorkd = 0;
+
+        public static double elevatorDownSetpoint = 0;
+        public static double elevatorLowSetpoint = 0;
+        public static double elevatorHighSetpoint = 0;
 
     }
 

@@ -13,6 +13,7 @@ public class ArmIntake extends SubsystemBase {
     private RelativeEncoder armEncoder;
     private ArmState armState;
     private RollerState rollerState;
+    
     public ArmIntake(){
         armSpark = new CANSparkMax(ArmIntakeConstants.armSparkID, MotorType.kBrushless);
         rollerSpark = new CANSparkMax(ArmIntakeConstants.rollerSparkID, MotorType.kBrushless);

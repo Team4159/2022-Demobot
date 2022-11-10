@@ -15,6 +15,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmIntake.ArmState;
+import frc.robot.subsystems.Climber.ElevatorState;
 import frc.robot.Constants.*;
 
 
@@ -40,10 +41,13 @@ public class RobotContainer {
 
   /* Secondardy Buttons */
   private final JoystickButton lowerArm = new JoystickButton(secondary, JoystickConstants.Secondary.intakeAndArm);
+;
+  private final JoystickButton raiseClimber = new JoystickButton(secondary, JoystickConstants.Secondary.raiseClimber);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final ArmIntake s_ArmIntake = new ArmIntake();
+  private final Climber s_Climber = new Climber();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -73,6 +77,9 @@ public class RobotContainer {
     /* Secondary Buttons */
     lowerArm.whenPressed(new SetArmState(s_ArmIntake, ArmState.LOW));
     lowerArm.whenReleased(new SetArmState(s_ArmIntake, ArmState.HIGH));
+
+    raiseClimber.whenPressed(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
+    raiseClimber.whenReleased(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
 
   }
 
