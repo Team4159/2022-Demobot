@@ -17,6 +17,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmIntake.ArmState;
 import frc.robot.Constants.*;
 
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -68,8 +69,10 @@ public class RobotContainer {
     defenseButton.whenPressed(new DefenseModeCommand(s_Swerve, true));
     defenseButton.whenReleased(new DefenseModeCommand(s_Swerve, false));
 
+
+    /* Secondary Buttons */
     lowerArm.whenPressed(new SetArmState(s_ArmIntake, ArmState.LOW));
-    lowerArm.whenPressed(new SetArmState(s_ArmIntake, ArmState.HIGH));
+    lowerArm.whenReleased(new SetArmState(s_ArmIntake, ArmState.HIGH));
 
   }
 

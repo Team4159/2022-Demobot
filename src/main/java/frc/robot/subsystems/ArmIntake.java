@@ -31,11 +31,11 @@ public class ArmIntake extends SubsystemBase {
         System.out.println("Arm state: " + armState);
         switch(armState) {
             case HIGH:
-                setArmMotor(runArmPID(ArmIntakeConstants.armHighSetpoint, getArmSparkPosition()));
+                setArmMotor(runArmPID(getArmSparkPosition(), ArmIntakeConstants.armHighSetpoint));
             case LOW:
-                setArmMotor(runArmPID(ArmIntakeConstants.armLowSetpoint, getArmSparkPosition()));
+                setArmMotor(runArmPID(getArmSparkPosition(), ArmIntakeConstants.armLowSetpoint));
             case LIMIT:
-                setArmMotor(runArmPID(ArmIntakeConstants.armLimitSetpoint, getArmSparkPosition()));
+                setArmMotor(runArmPID(getArmSparkPosition(), ArmIntakeConstants.armLimitSetpoint));
             case OFF:
                 setArmMotor(0);
         }
@@ -62,7 +62,7 @@ public class ArmIntake extends SubsystemBase {
     public void setRollerMotor(double speed){
         rollerSpark.setVoltage(speed*12);
     }
-    public double runArmPID(double setPoint, double currentPos){
+    public double runArmPID(double currentPos, double setPoint){
         return armPID.calculate(currentPos, setPoint);
     }
     public double getArmSparkPosition() {
