@@ -62,6 +62,9 @@ public class Climber extends SubsystemBase {
         leftTalon.setSelectedSensorPosition(0);
         rightTalon.setSelectedSensorPosition(0);
 
+        armState = ArmState.OFF;
+        elevatorState = ElevatorState.OFF;
+
     }
 
     @Override
@@ -70,42 +73,50 @@ public class Climber extends SubsystemBase {
         switch (armState) {
             case OFF:
                 runSparks(0, 0);
+                break;
             case LOW:
                 runSparks(
                     leftSparkPID.calculate(getSparkPosition(leftSpark), Constants.ClimberConstants.armLowSetpoint),
                     rightSparkPID.calculate(getSparkPosition(rightSpark), Constants.ClimberConstants.armLowSetpoint)
                 );
+                break;
             case HIGH:
                 runSparks(
                     leftSparkPID.calculate(getSparkPosition(leftSpark), Constants.ClimberConstants.armHighSetpoint),
                     rightSparkPID.calculate(getSparkPosition(rightSpark), Constants.ClimberConstants.armHighSetpoint)
                 );
+                break;
             case DOWN:
                 runSparks(
                     leftSparkPID.calculate(getSparkPosition(leftSpark), Constants.ClimberConstants.armDownSetpoint),
                     rightSparkPID.calculate(getSparkPosition(rightSpark), Constants.ClimberConstants.armDownSetpoint)
                 );
+                break;
         }
 
 
         switch (elevatorState) {
             case OFF:
                 runTalons(0, 0);
+                break;
             case LOW:
                 runTalons(
                     leftTalonPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorLowSetpoint),
                     rightTalonPID.calculate(getTalonPosition(rightTalon), Constants.ClimberConstants.elevatorLowSetpoint)
                 );
+                break;
             case HIGH:
                 runTalons(
                     leftSparkPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorHighSetpoint),
                     rightTalonPID.calculate(getTalonPosition(rightTalon), Constants.ClimberConstants.elevatorHighSetpoint)
                 );
+                break;
             case DOWN:
                 runTalons(
                     leftSparkPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorDownSetpoint),
                     rightTalonPID.calculate(getTalonPosition(rightTalon), Constants.ClimberConstants.elevatorDownSetpoint)
                 );
+                break;
         }
     }
 

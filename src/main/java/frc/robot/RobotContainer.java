@@ -48,7 +48,7 @@ public class RobotContainer {
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final ArmIntake s_ArmIntake = new ArmIntake();
-  private final Climber s_Climber = new Climber();
+  //private final Climber s_Climber = new Climber();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -81,8 +81,8 @@ public class RobotContainer {
     lowerArm.whenReleased(new SetArmState(s_ArmIntake, ArmState.HIGH));
     lowerArm.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
 
-    raiseClimber.whenPressed(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
-    raiseClimber.whenReleased(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
+    //raiseClimber.whenPressed(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
+    //raiseClimber.whenReleased(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
 
   }
 
