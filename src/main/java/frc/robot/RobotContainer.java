@@ -15,6 +15,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmIntake.ArmState;
+import frc.robot.subsystems.ArmIntake.RollerState;
 import frc.robot.subsystems.Climber.ElevatorState;
 import frc.robot.Constants.*;
 
@@ -76,7 +77,9 @@ public class RobotContainer {
 
     /* Secondary Buttons */
     lowerArm.whenPressed(new SetArmState(s_ArmIntake, ArmState.LOW));
+    lowerArm.whenPressed(new SetRollerState(s_ArmIntake, RollerState.FORWARD));
     lowerArm.whenReleased(new SetArmState(s_ArmIntake, ArmState.HIGH));
+    lowerArm.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
 
     raiseClimber.whenPressed(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
     raiseClimber.whenReleased(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
