@@ -159,11 +159,11 @@ public final class Constants {
         public static final boolean armInverted = false;
         public static final boolean rollerInverted = false;
 
-        public static final double kp = 0;
+        public static final double kp = 0.1;
         public static final double ki = 0;
-        public static final double kd = 0;
-        public static final double armHighSetpoint = 0;
-        public static final double armLowSetpoint = 0;
+        public static final double kd = 0.02;
+        public static final double armHighSetpoint = 3;
+        public static final double armLowSetpoint = 20;
         public static final double armLimitSetpoint = 0;
 
         public static final double rollerForwardSpeed = 1;

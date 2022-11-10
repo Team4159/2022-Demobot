@@ -21,9 +21,14 @@ public class ArmIntake extends SubsystemBase {
         armPID = new PIDController(ArmIntakeConstants.kp, ArmIntakeConstants.ki, ArmIntakeConstants.kd);
         armEncoder = armSpark.getEncoder();
         armState = ArmState.OFF;
+        rollerState = RollerState.OFF;
+
+        armEncoder.setPosition(0);
     }
     @Override
     public void periodic(){
+        System.out.println("Arm Spark Pos: " + getArmSparkPosition());
+        System.out.println("Arm state: " + armState);
         switch(armState) {
             case HIGH:
                 setArmMotor(runArmPID(ArmIntakeConstants.armHighSetpoint, getArmSparkPosition()));
@@ -43,6 +48,8 @@ public class ArmIntake extends SubsystemBase {
                 setRollerMotor(0);
         }
     }
+
+
     public void changeArmState (ArmState newState){
         armState = newState;
     }
