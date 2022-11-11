@@ -24,7 +24,7 @@ public class Climber extends SubsystemBase {
 
     public Climber() {
         /* sparks */
-        leftSpark = new CANSparkMax(
+        /*leftSpark = new CANSparkMax(
             Constants.ClimberConstants.leftSparkID,
             MotorType.kBrushless
         );
@@ -34,7 +34,7 @@ public class Climber extends SubsystemBase {
             Constants.ClimberConstants.rightSparkID,
             MotorType.kBrushless
         );
-        rightSpark.setInverted(Constants.ClimberConstants.rightSparkInverted);
+        rightSpark.setInverted(Constants.ClimberConstants.rightSparkInverted);*/
 
         /* talons */
         leftTalon = new TalonFX(
@@ -48,16 +48,16 @@ public class Climber extends SubsystemBase {
         rightTalon.setInverted(Constants.ClimberConstants.rightTalonInverted);
 
         /* PID Controllers */
-        leftSparkPID = new PIDController(Constants.ClimberConstants.armkp, Constants.ClimberConstants.armki, Constants.ClimberConstants.armkd);
-        rightSparkPID = new PIDController(Constants.ClimberConstants.armkp, Constants.ClimberConstants.armki, Constants.ClimberConstants.armkd);
+        /*leftSparkPID = new PIDController(Constants.ClimberConstants.armkp, Constants.ClimberConstants.armki, Constants.ClimberConstants.armkd);
+        rightSparkPID = new PIDController(Constants.ClimberConstants.armkp, Constants.ClimberConstants.armki, Constants.ClimberConstants.armkd);*/
 
         leftTalonPID = new PIDController(Constants.ClimberConstants.elevatorkp, Constants.ClimberConstants.elevatorki, Constants.ClimberConstants.elevatorkd);
         rightTalonPID = new PIDController(Constants.ClimberConstants.elevatorkp, Constants.ClimberConstants.elevatorki, Constants.ClimberConstants.elevatorkd);
 
 
         /* zero encoder values at robot init */
-        leftSpark.getEncoder().setPosition(0);
-        rightSpark.getEncoder().setPosition(0);
+        /*leftSpark.getEncoder().setPosition(0);
+        rightSpark.getEncoder().setPosition(0);*/
         
         leftTalon.setSelectedSensorPosition(0);
         rightTalon.setSelectedSensorPosition(0);
@@ -70,7 +70,7 @@ public class Climber extends SubsystemBase {
     @Override
     public void periodic() {
         
-        switch (armState) {
+        /*switch (armState) {
             case OFF:
                 runSparks(0, 0);
                 break;
@@ -92,9 +92,10 @@ public class Climber extends SubsystemBase {
                     rightSparkPID.calculate(getSparkPosition(rightSpark), Constants.ClimberConstants.armDownSetpoint)
                 );
                 break;
-        }
+        }*/
 
 
+        System.out.println("L: " + getTalonPosition(leftTalon) + "R: " + getTalonPosition(rightTalon));
         switch (elevatorState) {
             case OFF:
                 runTalons(0, 0);
@@ -107,13 +108,13 @@ public class Climber extends SubsystemBase {
                 break;
             case HIGH:
                 runTalons(
-                    leftSparkPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorHighSetpoint),
+                    leftTalonPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorHighSetpoint),
                     rightTalonPID.calculate(getTalonPosition(rightTalon), Constants.ClimberConstants.elevatorHighSetpoint)
                 );
                 break;
             case DOWN:
                 runTalons(
-                    leftSparkPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorDownSetpoint),
+                    leftTalonPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorDownSetpoint),
                     rightTalonPID.calculate(getTalonPosition(rightTalon), Constants.ClimberConstants.elevatorDownSetpoint)
                 );
                 break;
@@ -136,7 +137,7 @@ public class Climber extends SubsystemBase {
     }
 
     public double getTalonPosition(TalonFX talon) {
-        return talon.getSensorCollection().getIntegratedSensorPosition();
+        return talon.getSelectedSensorPosition();
     }
 
 

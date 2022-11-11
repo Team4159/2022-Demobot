@@ -148,8 +148,9 @@ public final class Constants {
             public static final int secondaryPort = 1;
             
             public static final int intakeAndArm = 1;
+            public static final int shoot = 2;
 
-            public static final int raiseClimber = 2;
+            public static final int raiseClimber = 3;
         }
     }
 
@@ -161,11 +162,11 @@ public final class Constants {
         public static final boolean armInverted = false;
         public static final boolean rollerInverted = false;
 
-        public static final double kp = 0.04;
+        public static final double kp = 0.035;
         public static final double ki = 0;
-        public static final double kd = 0;
+        public static final double kd = 0.003;
         public static final double armHighSetpoint = 3;
-        public static final double armLowSetpoint = 23;
+        public static final double armLowSetpoint = 22;
         public static final double armLimitSetpoint = 0;
 
         public static final double rollerForwardSpeed = 1;
@@ -190,19 +191,19 @@ public final class Constants {
         public static final double armHighSetpoint = 0;
         
 
-        public static final int leftTalonID = 11;
-        public static final int rightTalonID = 12;
+        public static final int leftTalonID = 12;
+        public static final int rightTalonID = 11;
 
-        public static final boolean leftTalonInverted = false;
+        public static final boolean leftTalonInverted = true;
         public static final boolean rightTalonInverted = false;
         
-        public static final double elevatorkp = 0;
-        public static final double elevatorki = 0;
+        public static final double elevatorkp = 0.00001;
+        public static final double elevatorki = 0.000001;
         public static final double elevatorkd = 0;
 
         public static double elevatorDownSetpoint = 0;
-        public static double elevatorLowSetpoint = 0;
-        public static double elevatorHighSetpoint = 0;
+        public static double elevatorLowSetpoint = 10000;
+        public static double elevatorHighSetpoint = 260000;
 
     }
 

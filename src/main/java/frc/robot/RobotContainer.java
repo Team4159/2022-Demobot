@@ -41,14 +41,15 @@ public class RobotContainer {
   private final JoystickButton defenseButton = new JoystickButton(driver, JoystickConstants.Driver.driverPort);
 
   /* Secondardy Buttons */
-  private final JoystickButton lowerArm = new JoystickButton(secondary, JoystickConstants.Secondary.intakeAndArm);
-;
-  private final JoystickButton raiseClimber = new JoystickButton(secondary, JoystickConstants.Secondary.raiseClimber);
+  private final JoystickButton lowerArmButton = new JoystickButton(secondary, JoystickConstants.Secondary.intakeAndArm);
+  private final JoystickButton shootButton = new JoystickButton(secondary, JoystickConstants.Secondary.shoot);
+
+  private final JoystickButton raiseClimberButton = new JoystickButton(secondary, JoystickConstants.Secondary.raiseClimber);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final ArmIntake s_ArmIntake = new ArmIntake();
-  //private final Climber s_Climber = new Climber();
+  private final Climber s_Climber = new Climber();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -76,13 +77,16 @@ public class RobotContainer {
 
 
     /* Secondary Buttons */
-    lowerArm.whenPressed(new SetArmState(s_ArmIntake, ArmState.LOW));
-    lowerArm.whenPressed(new SetRollerState(s_ArmIntake, RollerState.FORWARD));
-    lowerArm.whenReleased(new SetArmState(s_ArmIntake, ArmState.HIGH));
-    lowerArm.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
+    lowerArmButton.whenPressed(new SetArmState(s_ArmIntake, ArmState.LOW));
+    lowerArmButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.FORWARD));
+    lowerArmButton.whenReleased(new SetArmState(s_ArmIntake, ArmState.HIGH));
+    lowerArmButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
 
-    //raiseClimber.whenPressed(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
-    //raiseClimber.whenReleased(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
+    shootButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.BACKWARD));
+    shootButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
+
+    raiseClimberButton.whenPressed(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
+    raiseClimberButton.whenReleased(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
 
   }
 
