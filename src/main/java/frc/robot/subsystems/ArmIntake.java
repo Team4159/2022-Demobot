@@ -3,9 +3,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ArmIntakeConstants;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class ArmIntake extends SubsystemBase {
     private CANSparkMax armSpark;
@@ -14,6 +16,8 @@ public class ArmIntake extends SubsystemBase {
     private RelativeEncoder armEncoder;
     private ArmState armState;
     private RollerState rollerState;
+
+    private DigitalInput limitSwitch;
     
     public ArmIntake(){
         armSpark = new CANSparkMax(ArmIntakeConstants.armSparkID, MotorType.kBrushless);
@@ -24,11 +28,18 @@ public class ArmIntake extends SubsystemBase {
         armEncoder = armSpark.getEncoder();
         armState = ArmState.OFF;
         rollerState = RollerState.OFF;
+        limitSwitch = new DigitalInput(ArmIntakeConstants.limitSwitchChannel);
 
         armEncoder.setPosition(0);
     }
     @Override
     public void periodic(){
+        System.out.println("Arm Limit Switch: " + limitSwitch.get());
+
+        if (limitSwitch.get()) {
+            armEncoder.setPosition(ArmIntakeConstants.armLowSetpoint);
+        }
+
         switch(armState) {
             case HIGH:
                 setArmMotor(runArmPID(getArmSparkPosition(), ArmIntakeConstants.armHighSetpoint));

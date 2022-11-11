@@ -8,7 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ArmIntake.ArmState;
 
 public class Climber extends SubsystemBase {
@@ -38,21 +38,21 @@ public class Climber extends SubsystemBase {
 
         /* talons */
         leftTalon = new TalonFX(
-            Constants.ClimberConstants.leftTalonID
+            ClimberConstants.leftTalonID
         );
-        leftTalon.setInverted(Constants.ClimberConstants.leftTalonInverted);
+        leftTalon.setInverted(ClimberConstants.leftTalonInverted);
 
         rightTalon = new TalonFX(
-            Constants.ClimberConstants.rightTalonID
+            ClimberConstants.rightTalonID
         );
-        rightTalon.setInverted(Constants.ClimberConstants.rightTalonInverted);
+        rightTalon.setInverted(ClimberConstants.rightTalonInverted);
 
         /* PID Controllers */
         /*leftSparkPID = new PIDController(Constants.ClimberConstants.armkp, Constants.ClimberConstants.armki, Constants.ClimberConstants.armkd);
         rightSparkPID = new PIDController(Constants.ClimberConstants.armkp, Constants.ClimberConstants.armki, Constants.ClimberConstants.armkd);*/
 
-        leftTalonPID = new PIDController(Constants.ClimberConstants.elevatorkp, Constants.ClimberConstants.elevatorki, Constants.ClimberConstants.elevatorkd);
-        rightTalonPID = new PIDController(Constants.ClimberConstants.elevatorkp, Constants.ClimberConstants.elevatorki, Constants.ClimberConstants.elevatorkd);
+        leftTalonPID = new PIDController(ClimberConstants.elevatorkp, ClimberConstants.elevatorki, ClimberConstants.elevatorkd);
+        rightTalonPID = new PIDController(ClimberConstants.elevatorkp, ClimberConstants.elevatorki, ClimberConstants.elevatorkd);
 
 
         /* zero encoder values at robot init */
@@ -102,20 +102,20 @@ public class Climber extends SubsystemBase {
                 break;
             case LOW:
                 runTalons(
-                    leftTalonPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorLowSetpoint),
-                    rightTalonPID.calculate(getTalonPosition(rightTalon), Constants.ClimberConstants.elevatorLowSetpoint)
+                    leftTalonPID.calculate(getTalonPosition(leftTalon), ClimberConstants.elevatorLowSetpoint),
+                    rightTalonPID.calculate(getTalonPosition(rightTalon), ClimberConstants.elevatorLowSetpoint)
                 );
                 break;
             case HIGH:
                 runTalons(
-                    leftTalonPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorHighSetpoint),
-                    rightTalonPID.calculate(getTalonPosition(rightTalon), Constants.ClimberConstants.elevatorHighSetpoint)
+                    leftTalonPID.calculate(getTalonPosition(leftTalon), ClimberConstants.elevatorHighSetpoint),
+                    rightTalonPID.calculate(getTalonPosition(rightTalon), ClimberConstants.elevatorHighSetpoint)
                 );
                 break;
             case DOWN:
                 runTalons(
-                    leftTalonPID.calculate(getTalonPosition(leftTalon), Constants.ClimberConstants.elevatorDownSetpoint),
-                    rightTalonPID.calculate(getTalonPosition(rightTalon), Constants.ClimberConstants.elevatorDownSetpoint)
+                    leftTalonPID.calculate(getTalonPosition(leftTalon), ClimberConstants.elevatorDownSetpoint),
+                    rightTalonPID.calculate(getTalonPosition(rightTalon), ClimberConstants.elevatorDownSetpoint)
                 );
                 break;
         }

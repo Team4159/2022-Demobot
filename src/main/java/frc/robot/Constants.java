@@ -159,6 +159,8 @@ public final class Constants {
         public static final int armSparkID = 13;
         public static final int rollerSparkID = 14;
 
+        public static final int limitSwitchChannel = 0;
+
         public static final boolean armInverted = false;
         public static final boolean rollerInverted = false;
 
