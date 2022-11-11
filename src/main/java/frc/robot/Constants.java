@@ -162,10 +162,10 @@ public final class Constants {
         public static final boolean armInverted = false;
         public static final boolean rollerInverted = false;
 
-        public static final double kp = 0.035;
-        public static final double ki = 0;
-        public static final double kd = 0.003;
-        public static final double armHighSetpoint = 3;
+        public static final double kp = 0.05;
+        public static final double ki = 0.02;
+        public static final double kd = 0.008;
+        public static final double armHighSetpoint = 1;
         public static final double armLowSetpoint = 22;
         public static final double armLimitSetpoint = 0;
 
