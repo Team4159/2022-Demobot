@@ -87,6 +87,7 @@ public class ArmIntake extends SubsystemBase {
         return armPID.calculate(currentPos, setPoint);
     }
     public double getArmSparkPosition() {
+        System.out.println("Arm Spark: " + armEncoder.getPosition());
         return armEncoder.getPosition();
     }
     public static enum ArmState {
