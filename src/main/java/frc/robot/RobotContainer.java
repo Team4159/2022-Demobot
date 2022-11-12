@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
@@ -44,7 +45,14 @@ public class RobotContainer {
   private final JoystickButton lowerArmButton = new JoystickButton(secondary, JoystickConstants.Secondary.intakeAndArm);
   private final JoystickButton shootButton = new JoystickButton(secondary, JoystickConstants.Secondary.shoot);
 
+  private final JoystickButton lowerArmNoSpinButton = new JoystickButton(secondary, JoystickConstants.Secondary.lowerArmNoSpin);
+  private final JoystickButton forceRaiseArmButton = new JoystickButton(secondary, JoystickConstants.Secondary.forceRaiseArm);
+  private final JoystickButton rollerInButton = new JoystickButton(secondary, JoystickConstants.Secondary.rollerIn);
+
+
   private final JoystickButton raiseClimberButton = new JoystickButton(secondary, JoystickConstants.Secondary.raiseClimber);
+  private final JoystickButton swingArmButton = new JoystickButton(secondary, JoystickConstants.Secondary.swingArm);
+  private final JoystickButton setArmStateButton = new JoystickButton(secondary, JoystickConstants.Secondary.climbMode);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -82,11 +90,25 @@ public class RobotContainer {
     lowerArmButton.whenReleased(new SetArmState(s_ArmIntake, ArmState.HIGH));
     lowerArmButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
 
+    lowerArmNoSpinButton.whenPressed(new SetArmState(s_ArmIntake, ArmState.LOW));
+    forceRaiseArmButton.whenPressed(new SetArmState(s_ArmIntake, ArmState.HIGH));
+
+    rollerInButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.FORWARD));
+    rollerInButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
+
+
+
+
     shootButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.BACKWARD));
     shootButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
 
     raiseClimberButton.whenPressed(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
     raiseClimberButton.whenReleased(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
+
+    swingArmButton.whenPressed(new ToggleClimberArm(s_Climber, frc.robot.subsystems.Climber.ArmState.HIGH));
+
+    setArmStateButton.whenPressed(new SetClimberArmState(s_Climber, frc.robot.subsystems.Climber.ArmState.HIGH));
+    //swingArmButton.whenReleased(new SetClimberArmState(s_Climber, frc.robot.subsystems.Climber.ArmState.LOW));
 
   }
 
@@ -97,6 +119,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new exampleAuto(s_Swerve);
+    return new exampleAuto(s_Swerve, s_ArmIntake);
   }
 }

@@ -34,7 +34,7 @@ public class ArmIntake extends SubsystemBase {
     }
     @Override
     public void periodic(){
-        System.out.println("Arm Limit Switch: " + limitSwitch.get());
+        //System.out.println("Arm Limit Switch: " + limitSwitch.get());
 
         if (limitSwitch.get()) {
             armEncoder.setPosition(ArmIntakeConstants.armLowSetpoint);

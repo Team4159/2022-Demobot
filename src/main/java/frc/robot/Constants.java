@@ -150,7 +150,17 @@ public final class Constants {
             public static final int intakeAndArm = 1;
             public static final int shoot = 2;
 
+            public static final int lowerArmNoSpin = 7;
+            public static final int forceRaiseArm = 6;
+
+            public static final int rollerIn = 8;
+
             public static final int raiseClimber = 3;
+            public static final int swingArm = 4;
+
+            public static final int climbMode = 13;
+
+
         }
     }
 
@@ -181,16 +191,17 @@ public final class Constants {
         public static final int leftSparkID = 9;
         public static final int rightSparkID = 10;
 
-        public static final boolean leftSparkInverted = false;
+        public static final boolean leftSparkInverted = true;
         public static final boolean rightSparkInverted = false;
 
-        public static final double armkp = 0;
-        public static final double armki = 0;
+        public static final double armkp = 0.05;
+        public static final double armki = 0.1;
         public static final double armkd = 0;
 
         public static final double armDownSetpoint = 0;
-        public static final double armLowSetpoint = 0;
-        public static final double armHighSetpoint = 0;
+        public static final double armMidSetpoint = 18;
+        public static final double armLowSetpoint = 30;
+        public static final double armHighSetpoint = 37;
         
 
         public static final int leftTalonID = 12;

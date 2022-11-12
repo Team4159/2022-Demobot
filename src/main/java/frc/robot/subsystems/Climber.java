@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -24,40 +26,44 @@ public class Climber extends SubsystemBase {
 
     public Climber() {
         /* sparks */
-        /*leftSpark = new CANSparkMax(
-            Constants.ClimberConstants.leftSparkID,
+        leftSpark = new CANSparkMax(
+            ClimberConstants.leftSparkID,
             MotorType.kBrushless
         );
-        leftSpark.setInverted(Constants.ClimberConstants.leftSparkInverted);
+        leftSpark.setInverted(ClimberConstants.leftSparkInverted);
+        leftSpark.setIdleMode(IdleMode.kBrake);
 
         rightSpark = new CANSparkMax(
-            Constants.ClimberConstants.rightSparkID,
+            ClimberConstants.rightSparkID,
             MotorType.kBrushless
         );
-        rightSpark.setInverted(Constants.ClimberConstants.rightSparkInverted);*/
+        rightSpark.setInverted(ClimberConstants.rightSparkInverted);
+        rightSpark.setIdleMode(IdleMode.kBrake);
 
         /* talons */
         leftTalon = new TalonFX(
             ClimberConstants.leftTalonID
         );
         leftTalon.setInverted(ClimberConstants.leftTalonInverted);
+        leftTalon.setNeutralMode(NeutralMode.Brake);
 
         rightTalon = new TalonFX(
             ClimberConstants.rightTalonID
         );
         rightTalon.setInverted(ClimberConstants.rightTalonInverted);
+        rightTalon.setNeutralMode(NeutralMode.Brake);
 
         /* PID Controllers */
-        /*leftSparkPID = new PIDController(Constants.ClimberConstants.armkp, Constants.ClimberConstants.armki, Constants.ClimberConstants.armkd);
-        rightSparkPID = new PIDController(Constants.ClimberConstants.armkp, Constants.ClimberConstants.armki, Constants.ClimberConstants.armkd);*/
+        leftSparkPID = new PIDController(ClimberConstants.armkp, ClimberConstants.armki, ClimberConstants.armkd);
+        rightSparkPID = new PIDController(ClimberConstants.armkp, ClimberConstants.armki, ClimberConstants.armkd);
 
         leftTalonPID = new PIDController(ClimberConstants.elevatorkp, ClimberConstants.elevatorki, ClimberConstants.elevatorkd);
         rightTalonPID = new PIDController(ClimberConstants.elevatorkp, ClimberConstants.elevatorki, ClimberConstants.elevatorkd);
 
 
         /* zero encoder values at robot init */
-        /*leftSpark.getEncoder().setPosition(0);
-        rightSpark.getEncoder().setPosition(0);*/
+        leftSpark.getEncoder().setPosition(0);
+        rightSpark.getEncoder().setPosition(0);
         
         leftTalon.setSelectedSensorPosition(0);
         rightTalon.setSelectedSensorPosition(0);
@@ -70,32 +76,42 @@ public class Climber extends SubsystemBase {
     @Override
     public void periodic() {
         
-        /*switch (armState) {
+        switch (armState) {
             case OFF:
                 runSparks(0, 0);
                 break;
             case LOW:
                 runSparks(
-                    leftSparkPID.calculate(getSparkPosition(leftSpark), Constants.ClimberConstants.armLowSetpoint),
-                    rightSparkPID.calculate(getSparkPosition(rightSpark), Constants.ClimberConstants.armLowSetpoint)
+                    leftSparkPID.calculate(getSparkPosition(leftSpark), ClimberConstants.armLowSetpoint),
+                    rightSparkPID.calculate(getSparkPosition(rightSpark), ClimberConstants.armLowSetpoint)
                 );
                 break;
             case HIGH:
                 runSparks(
-                    leftSparkPID.calculate(getSparkPosition(leftSpark), Constants.ClimberConstants.armHighSetpoint),
-                    rightSparkPID.calculate(getSparkPosition(rightSpark), Constants.ClimberConstants.armHighSetpoint)
+                    leftSparkPID.calculate(getSparkPosition(leftSpark), ClimberConstants.armHighSetpoint),
+                    rightSparkPID.calculate(getSparkPosition(rightSpark), ClimberConstants.armHighSetpoint)
                 );
                 break;
+            case MID:
+                runSparks(
+                    leftSparkPID.calculate(getSparkPosition(leftSpark), ClimberConstants.armMidSetpoint),
+                    rightSparkPID.calculate(getSparkPosition(rightSpark), ClimberConstants.armMidSetpoint)
+                );
+            break;
+
             case DOWN:
                 runSparks(
-                    leftSparkPID.calculate(getSparkPosition(leftSpark), Constants.ClimberConstants.armDownSetpoint),
-                    rightSparkPID.calculate(getSparkPosition(rightSpark), Constants.ClimberConstants.armDownSetpoint)
+                    leftSparkPID.calculate(getSparkPosition(leftSpark), ClimberConstants.armDownSetpoint),
+                    rightSparkPID.calculate(getSparkPosition(rightSpark), ClimberConstants.armDownSetpoint)
                 );
                 break;
-        }*/
+        }
 
 
-        System.out.println("L: " + getTalonPosition(leftTalon) + "R: " + getTalonPosition(rightTalon));
+        System.out.println("L: " + getSparkPosition(leftSpark) + "R: " + getSparkPosition(rightSpark));
+
+
+
         switch (elevatorState) {
             case OFF:
                 runTalons(0, 0);
@@ -149,6 +165,16 @@ public class Climber extends SubsystemBase {
         elevatorState = newState;
     }
 
+    public void toggleArm() {
+        leftSparkPID.reset();
+        rightSparkPID.reset();
+        if (armState == ArmState.DOWN || armState ==  ArmState.OFF || armState == ArmState.LOW || armState == ArmState.HIGH) {
+            armState = ArmState.MID;
+        } else {
+            armState = ArmState.LOW;
+        }
+    }
+
 
 
     public static enum ElevatorState {
@@ -162,6 +188,7 @@ public class Climber extends SubsystemBase {
         DOWN,
         LOW,
         HIGH,
+        MID,
         OFF
     }
 
