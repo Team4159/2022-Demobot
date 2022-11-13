@@ -30,9 +30,7 @@ public class ProgressClimberArmState extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        ArmState actual = climber.getActualArmState();
-        System.out.printf("[%s] -> [%s]\n", climber.getDesiredArmState().toString(), actual.toString());
-        return actual.equals(armState);
+        return climber.getActualArmState().equals(armState);
     }
 
     @Override

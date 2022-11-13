@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
@@ -64,6 +65,8 @@ public class Climber extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("Climber Arm L", lArm.getEncoder().getPosition());
+        SmartDashboard.putNumber("Climber Arm R", rArm.getEncoder().getPosition());
         switch (armStateDesired) {
             case OFF:
                 runSparks(0, 0);
@@ -152,6 +155,7 @@ public class Climber extends SubsystemBase {
         leftSparkPID.reset();
         rightSparkPID.reset();
         armStateDesired = newState;
+        SmartDashboard.putString("Climber Arm DState", armStateDesired.toString());
     }
 
     public void setElevatorState(ElevatorState newState) {

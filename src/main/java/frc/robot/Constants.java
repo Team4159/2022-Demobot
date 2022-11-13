@@ -178,9 +178,9 @@ public final class Constants {
         public static final double kp = 0.45;
         public static final double ki = 0.002;
         public static final double kd = 0.008;
-        public static final double armLockSetpoint = 8;
-        public static final double armLowSetpoint = 32;
         public static final double armLimitSetpoint = 5.2;
+        public static final double armLowSetpoint = 32;
+        public static final double armHighSetpoint = 5.2;
 
         public static final double rollerForwardSpeed = 1;
         public static final double rollerBackwardSpeed = -1;
@@ -201,7 +201,7 @@ public final class Constants {
 
         public static final double armDownSetpoint = 0;
         public static final double armLowSetpoint = 14.5;
-        public static final double armMidSetpoint = 21;
+        public static final double armMidSetpoint = 19;
         public static final double armHighSetpoint = 25.5;
         public static final double tolerance = 1;
 
