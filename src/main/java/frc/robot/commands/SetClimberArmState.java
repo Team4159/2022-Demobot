@@ -19,11 +19,16 @@ public class SetClimberArmState extends CommandBase {
     @Override
     public void initialize() {
         s_Climber.setArmState(armState);
-        //s_Climber.toggleArm();
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return s_Climber.getActualArmState().equals(armState);
+    }
+
+    @Override
+    public void end(boolean i) {
+        super.end(i);
+        s_Climber.setArmState(ArmState.OFF);
     }
 }

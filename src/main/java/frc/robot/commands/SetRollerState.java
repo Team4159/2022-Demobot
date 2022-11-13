@@ -24,4 +24,9 @@ public class SetRollerState extends CommandBase {
     public boolean isFinished() {
         return true;
     }
+
+    @Override
+    public void end(boolean i) {
+        armIntake.changeRollerState(RollerState.OFF);
+    }
 }

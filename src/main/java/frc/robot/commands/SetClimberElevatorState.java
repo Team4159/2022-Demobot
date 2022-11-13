@@ -5,16 +5,12 @@ import frc.robot.subsystems.*;
 import frc.robot.subsystems.Climber.ArmState;
 import frc.robot.subsystems.Climber.ElevatorState;
 
-public class SetClimberState extends CommandBase {
-    
-    private ArmState armState;
+public class SetClimberElevatorState extends CommandBase {
     private ElevatorState elevatorState;
+    private Climber s_Climber;
 
-    private Climber climber;
-
-    public SetClimberState(Climber m_climber, ArmState m_armState, ElevatorState m_eElevatorState) {
-        climber = m_climber;
-        armState = m_armState;
+    public SetClimberElevatorState(Climber m_climber, ArmState m_armState, ElevatorState m_eElevatorState) {
+        s_Climber = m_climber;
         elevatorState = m_eElevatorState;
 
         addRequirements(m_climber);
@@ -23,7 +19,7 @@ public class SetClimberState extends CommandBase {
     @Override
     public void initialize() {
         //climber.setArmState(armState);
-        climber.setElevatorState(elevatorState);
+        s_Climber.setElevatorState(elevatorState);
     }
 
     @Override

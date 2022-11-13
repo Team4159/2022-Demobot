@@ -149,7 +149,7 @@ public final class Constants {
             
             public static final int intakeAndArm = 1;
             public static final int shoot = 2;
-
+ 
             public static final int lowerArmNoSpin = 7;
             public static final int forceRaiseArm = 6;
 
@@ -199,10 +199,10 @@ public final class Constants {
         public static final double armkd = 0;
 
         public static final double armDownSetpoint = 0;
-        public static final double armMidSetpoint = 18;
-        public static final double armLowSetpoint = 30;
-        public static final double armHighSetpoint = 37;
-        
+        public static final double armMidSetpoint = 14.5;
+        public static final double armLowSetpoint = 21;
+        public static final double armHighSetpoint = 25.5;
+        public static final double tolerance = 1;
 
         public static final int leftTalonID = 12;
         public static final int rightTalonID = 11;

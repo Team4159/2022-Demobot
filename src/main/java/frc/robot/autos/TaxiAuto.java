@@ -14,12 +14,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
-import frc.robot.commands.SetArmState;
-import frc.robot.subsystems.ArmIntake;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.ArmIntake.ArmState;
 
-public class exampleAuto extends SequentialCommandGroup {
+public class TaxiAuto extends SequentialCommandGroup {
     private Trajectory trajectory = null;
     {
         try {
@@ -30,7 +27,7 @@ public class exampleAuto extends SequentialCommandGroup {
         }
     }
 
-    public exampleAuto(Swerve s_Swerve, ArmIntake s_armIntake) {
+    public TaxiAuto(Swerve s_Swerve) {
         var thetaController = new ProfiledPIDController(
                 Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
@@ -45,9 +42,24 @@ public class exampleAuto extends SequentialCommandGroup {
                 s_Swerve::setModuleStates,
                 s_Swerve);
 
-        addCommands(
-                new SetArmState(s_armIntake, ArmState.HIGH),
-                new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialPose())),
-                swerveControllerCommand);
+        addCommands(new SequentialCommandGroup(
+            new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialPose())),
+            swerveControllerCommand
+        ));
+        // addCommands(
+        //         new SequentialCommandGroup(
+        //             new SetArmState(s_armIntake, ArmState.LOW),
+        //             new SetArmState(s_armIntake, ArmState.HIGH),
+        //             new SetRollerState(s_armIntake, RollerState.BACKWARD).withTimeout(4),
+        //             new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialPose())),
+        //             swerveControllerCommand)); 
+                    // new SetArmState(s_armIntake, ArmState.HIGH).withTimeout(2));
+                    // new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialPose())),
+                    // swerveControllerCommand).withTimeout(4)
+                
+                // new SetArmState(s_armIntake, ArmState.HIGH),
+                // // new SetRollerState(s_armIntake, RollerState.BACKWARD).withTimeout(4), 
+                // new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialPose())),
+                // swerveControllerCommand);
     }
 }

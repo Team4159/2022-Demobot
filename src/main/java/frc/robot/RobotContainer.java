@@ -6,19 +6,25 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import frc.robot.autos.*;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
+import frc.robot.Constants.JoystickConstants;
+import frc.robot.autos.TaxiAuto;
+import frc.robot.commands.DefenseModeCommand;
+import frc.robot.commands.SetArmState;
+import frc.robot.commands.SetClimberArmState;
+import frc.robot.commands.SetClimberElevatorState;
+import frc.robot.commands.SetRollerState;
+import frc.robot.commands.TeleopSwerve;
+import frc.robot.subsystems.ArmIntake;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Climber.ElevatorState;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.ArmIntake.ArmState;
 import frc.robot.subsystems.ArmIntake.RollerState;
-import frc.robot.subsystems.Climber.ElevatorState;
-import frc.robot.Constants.*;
 
 
 /**
@@ -96,17 +102,21 @@ public class RobotContainer {
     rollerInButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.FORWARD));
     rollerInButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
 
-
-
-
     shootButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.BACKWARD));
     shootButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
 
-    raiseClimberButton.whenPressed(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
-    raiseClimberButton.whenReleased(new SetClimberState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
+    raiseClimberButton.whenPressed(new SetClimberElevatorState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
+    raiseClimberButton.whenReleased(new SetClimberElevatorState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
 
-    swingArmButton.whenPressed(new ToggleClimberArm(s_Climber, frc.robot.subsystems.Climber.ArmState.HIGH));
-
+    swingArmButton.whenHeld(new SequentialCommandGroup(
+      new SetClimberArmState(s_Climber, Climber.ArmState.DOWN),
+      new SetClimberArmState(s_Climber, Climber.ArmState.HIGH),
+      new SetClimberArmState(s_Climber, Climber.ArmState.LOW),
+      new SetClimberArmState(s_Climber, Climber.ArmState.MID),
+      new SetClimberArmState(s_Climber, Climber.ArmState.LOW),
+      new SetClimberArmState(s_Climber, Climber.ArmState.MID),
+      new SetClimberArmState(s_Climber, Climber.ArmState.LOW)
+    ));
     setArmStateButton.whenPressed(new SetClimberArmState(s_Climber, frc.robot.subsystems.Climber.ArmState.HIGH));
     //swingArmButton.whenReleased(new SetClimberArmState(s_Climber, frc.robot.subsystems.Climber.ArmState.LOW));
 
@@ -119,6 +129,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new exampleAuto(s_Swerve, s_ArmIntake);
+    return new TaxiAuto(s_Swerve /*, s_ArmIntake*/);
   }
 }
