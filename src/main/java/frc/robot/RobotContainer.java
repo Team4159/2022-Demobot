@@ -14,17 +14,17 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.autos.TaxiAuto;
 import frc.robot.commands.DefenseModeCommand;
-import frc.robot.commands.SetArmState;
+import frc.robot.commands.SetIntakeArmState;
 import frc.robot.commands.SetClimberArmState;
 import frc.robot.commands.SetClimberElevatorState;
 import frc.robot.commands.SetRollerState;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.subsystems.ArmIntake;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Climber.ElevatorState;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.ArmIntake.ArmState;
-import frc.robot.subsystems.ArmIntake.RollerState;
+import frc.robot.subsystems.Intake.ArmState;
+import frc.robot.subsystems.Intake.RollerState;
 
 
 /**
@@ -48,7 +48,7 @@ public class RobotContainer {
   private final JoystickButton defenseButton = new JoystickButton(driver, JoystickConstants.Driver.driverPort);
 
   /* Secondardy Buttons */
-  private final JoystickButton lowerArmButton = new JoystickButton(secondary, JoystickConstants.Secondary.intakeAndArm);
+  private final JoystickButton armButton = new JoystickButton(secondary, JoystickConstants.Secondary.intakeAndArm);
   private final JoystickButton shootButton = new JoystickButton(secondary, JoystickConstants.Secondary.shoot);
 
   private final JoystickButton lowerArmNoSpinButton = new JoystickButton(secondary, JoystickConstants.Secondary.lowerArmNoSpin);
@@ -62,7 +62,7 @@ public class RobotContainer {
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
-  private final ArmIntake s_ArmIntake = new ArmIntake();
+  private final Intake s_ArmIntake = new Intake();
   private final Climber s_Climber = new Climber();
 
 
@@ -91,13 +91,13 @@ public class RobotContainer {
 
 
     /* Secondary Buttons */
-    lowerArmButton.whenPressed(new SetArmState(s_ArmIntake, ArmState.LOW));
-    lowerArmButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.FORWARD));
-    lowerArmButton.whenReleased(new SetArmState(s_ArmIntake, ArmState.HIGH));
-    lowerArmButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
+    armButton.whenPressed(new SetIntakeArmState(s_ArmIntake, ArmState.LOW));
+    armButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.FORWARD));
+    armButton.whenReleased(new SetIntakeArmState(s_ArmIntake, ArmState.HIGH));
+    armButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));
 
-    lowerArmNoSpinButton.whenPressed(new SetArmState(s_ArmIntake, ArmState.LOW));
-    forceRaiseArmButton.whenPressed(new SetArmState(s_ArmIntake, ArmState.HIGH));
+    lowerArmNoSpinButton.whenPressed(new SetIntakeArmState(s_ArmIntake, ArmState.LOW));
+    forceRaiseArmButton.whenPressed(new SetIntakeArmState(s_ArmIntake, ArmState.HIGH));
 
     rollerInButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.FORWARD));
     rollerInButton.whenReleased(new SetRollerState(s_ArmIntake, RollerState.OFF));

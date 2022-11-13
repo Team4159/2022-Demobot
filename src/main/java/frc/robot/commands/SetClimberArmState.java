@@ -29,6 +29,6 @@ public class SetClimberArmState extends CommandBase {
     @Override
     public void end(boolean i) {
         super.end(i);
-        s_Climber.setArmState(ArmState.OFF);
+        if (i) s_Climber.setArmState(ArmState.OFF);
     }
 }

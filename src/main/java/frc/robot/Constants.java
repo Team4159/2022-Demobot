@@ -164,7 +164,7 @@ public final class Constants {
         }
     }
 
-    public static final class ArmIntakeConstants {
+    public static final class IntakeConstants {
 
         public static final int armSparkID = 13;
         public static final int rollerSparkID = 14;
@@ -174,6 +174,7 @@ public final class Constants {
         public static final boolean armInverted = false;
         public static final boolean rollerInverted = false;
 
+        public static final double tolerance = 2;
         public static final double kp = 0.05;
         public static final double ki = 0.02;
         public static final double kd = 0.008;

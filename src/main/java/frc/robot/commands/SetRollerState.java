@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmIntake;
-import frc.robot.subsystems.ArmIntake.RollerState;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Intake.RollerState;
 
 public class SetRollerState extends CommandBase {
-    private ArmIntake armIntake;
+    private Intake armIntake;
     private RollerState rollerState;
 
-    public SetRollerState(ArmIntake m_aArmIntake, RollerState m_rollerState) {
+    public SetRollerState(Intake m_aArmIntake, RollerState m_rollerState) {
         armIntake = m_aArmIntake;
         rollerState = m_rollerState;
 
