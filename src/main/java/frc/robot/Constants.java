@@ -174,13 +174,13 @@ public final class Constants {
         public static final boolean armInverted = false;
         public static final boolean rollerInverted = false;
 
-        public static final double tolerance = 2;
-        public static final double kp = 0.05;
-        public static final double ki = 0.02;
+        public static final double tolerance = 1;
+        public static final double kp = 0.45;
+        public static final double ki = 0.002;
         public static final double kd = 0.008;
-        public static final double armHighSetpoint = 4;
-        public static final double armLowSetpoint = 22;
-        public static final double armLimitSetpoint = 0;
+        public static final double armLockSetpoint = 8;
+        public static final double armLowSetpoint = 32;
+        public static final double armLimitSetpoint = 5.2;
 
         public static final double rollerForwardSpeed = 1;
         public static final double rollerBackwardSpeed = -1;
@@ -195,8 +195,8 @@ public final class Constants {
         public static final boolean leftSparkInverted = true;
         public static final boolean rightSparkInverted = false;
 
-        public static final double armkp = 0.02;
-        public static final double armki = 0.1;
+        public static final double armkp = 0.05;
+        public static final double armki = 0.001;
         public static final double armkd = 0.0001;
 
         public static final double armDownSetpoint = 0;
@@ -217,7 +217,7 @@ public final class Constants {
 
         public static double elevatorDownSetpoint = 0;
         public static double elevatorLowSetpoint = 10000;
-        public static double elevatorHighSetpoint = 260000;
+        public static double elevatorHighSetpoint = 280000;
 
     }
 

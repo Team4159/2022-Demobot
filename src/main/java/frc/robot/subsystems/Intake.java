@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.DigitalInput;
+// import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Intake extends SubsystemBase {
     private CANSparkMax armMotor;
@@ -17,7 +17,7 @@ public class Intake extends SubsystemBase {
     private ArmState armStateDesired;
     private RollerState rollerState;
 
-    private DigitalInput limitSwitch;
+    // private DigitalInput limitSwitch;
     
     public Intake() {
         armMotor = new CANSparkMax(IntakeConstants.armSparkID, MotorType.kBrushless);
@@ -27,21 +27,21 @@ public class Intake extends SubsystemBase {
         armPID = new PIDController(IntakeConstants.kp, IntakeConstants.ki, IntakeConstants.kd);
         armStateDesired = ArmState.OFF;
         rollerState = RollerState.OFF;
-        limitSwitch = new DigitalInput(IntakeConstants.limitSwitchChannel);
+        // limitSwitch = new DigitalInput(IntakeConstants.limitSwitchChannel);
 
-        armMotor.getEncoder().setPosition(0);
+        armMotor.getEncoder().setPosition(IntakeConstants.armLimitSetpoint);
     }
     @Override
     public void periodic(){
-        if (limitSwitch.get()) {
-            armMotor.getEncoder().setPosition(IntakeConstants.armLowSetpoint);
-        }
+        System.out.println("Arm: " + armMotor.getEncoder().getPosition() + "State: "+armStateDesired.toString());
+
+        //if (limitSwitch.get()) armMotor.getEncoder().setPosition(IntakeConstants.armLowSetpoint);
 
         switch(armStateDesired) {
             case HIGH:
                 setArmMotor(runArmPID(getArmSparkPosition(), IntakeConstants.armHighSetpoint));
                 break;
-            case LOW:
+            case LOW: 
                 setArmMotor(runArmPID(getArmSparkPosition(), IntakeConstants.armLowSetpoint));
                 break;
             case LIMIT:
@@ -92,14 +92,12 @@ public class Intake extends SubsystemBase {
         armMotor.setVoltage(speed*12);
     }
     public void setRollerMotor(double speed){
-        //System.out.println(speed);
         rollerSpark.setVoltage(speed*12);
     }
     public double runArmPID(double currentPos, double setPoint){
         return armPID.calculate(currentPos, setPoint);
     }
     public double getArmSparkPosition() {
-        System.out.println("Arm Spark: " + armMotor.getEncoder().getPosition());
         return armMotor.getEncoder().getPosition();
     }
     public static enum ArmState {

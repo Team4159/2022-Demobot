@@ -54,7 +54,6 @@ public class RobotContainer {
   private final JoystickButton forceRaiseArmButton = new JoystickButton(secondary, JoystickConstants.Secondary.forceRaiseArm);
   private final JoystickButton rollerInButton = new JoystickButton(secondary, JoystickConstants.Secondary.rollerIn);
 
-
   private final JoystickButton raiseClimberButton = new JoystickButton(secondary, JoystickConstants.Secondary.raiseClimber);
   private final JoystickButton swingArmButton = new JoystickButton(secondary, JoystickConstants.Secondary.swingArm);
 
@@ -64,7 +63,7 @@ public class RobotContainer {
   private final Climber s_Climber = new Climber();
 
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /** The container for the robot. Contains subsystems, IO devices, and commands. */
   public RobotContainer() {
     boolean fieldRelative = true;
     boolean openLoop = true;
@@ -81,6 +80,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // secondary.set
     /* Driver Buttons */
     zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
 

@@ -93,7 +93,6 @@ public class Climber extends SubsystemBase {
                 );
                 break;
         }
-        // System.out.println("L: " + getSparkPosition(lArm) + "R: " +getSparkPosition(rArm) + );
         switch (elevatorState) {
             case OFF:
                 runElev(0, 0);

@@ -54,7 +54,6 @@ public class Swerve extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
         
         if (defenseMode) {
-            System.out.println("DEFENSE MODE");
             swerveModuleStates[0] = new SwerveModuleState(0.1, Rotation2d.fromDegrees(45));
             swerveModuleStates[1] = new SwerveModuleState(0.1, Rotation2d.fromDegrees(315));
             swerveModuleStates[2] = new SwerveModuleState(0.1, Rotation2d.fromDegrees(315));
