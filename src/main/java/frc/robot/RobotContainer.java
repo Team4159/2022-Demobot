@@ -44,7 +44,7 @@ public class RobotContainer {
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, JoystickConstants.Driver.zeroGyro);
-  private final JoystickButton defenseButton = new JoystickButton(driver, JoystickConstants.Driver.driverPort);
+  private final JoystickButton defenseButton = new JoystickButton(driver, JoystickConstants.Driver.defenseMode);
 
   /* Secondardy Buttons */
   private final JoystickButton armButton = new JoystickButton(secondary, JoystickConstants.Secondary.intakeAndArm);
@@ -57,17 +57,18 @@ public class RobotContainer {
   private final JoystickButton raiseClimberButton = new JoystickButton(secondary, JoystickConstants.Secondary.raiseClimber);
   private final JoystickButton swingArmButton = new JoystickButton(secondary, JoystickConstants.Secondary.swingArm);
 
+  private final JoystickButton ixButton = new JoystickButton(driver, 3);
+  private final JoystickButton iyButton = new JoystickButton(driver, 4);
+
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
   private final Intake s_ArmIntake = new Intake();
   private final Climber s_Climber = new Climber();
 
-
+  private final TeleopSwerve swerveCommand = new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, true, true);
   /** The container for the robot. Contains subsystems, IO devices, and commands. */
   public RobotContainer() {
-    boolean fieldRelative = true;
-    boolean openLoop = true;
-    s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver, translationAxis, strafeAxis, rotationAxis, fieldRelative, openLoop));
+    s_Swerve.setDefaultCommand(swerveCommand);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -106,6 +107,9 @@ public class RobotContainer {
     raiseClimberButton.whenReleased(new SetClimberElevatorState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
 
     swingArmButton.whenPressed(new ProgressClimberArmState(s_Climber));
+
+    ixButton.whenPressed(new InstantCommand(() -> {swerveCommand.ix = !swerveCommand.ix;}));
+    iyButton.whenPressed(new InstantCommand(() -> {swerveCommand.iy = !swerveCommand.iy;}));
   }
 
   /**

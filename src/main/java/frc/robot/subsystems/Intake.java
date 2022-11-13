@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase {
         armMotor.setInverted(IntakeConstants.armInverted);
         rollerSpark.setInverted(IntakeConstants.rollerInverted);
         armPID = new PIDController(IntakeConstants.kp, IntakeConstants.ki, IntakeConstants.kd);
-        armStateDesired = ArmState.LIMIT;
+        armStateDesired = ArmState.OFF;
         rollerState = RollerState.OFF;
         // limitSwitch = new DigitalInput(IntakeConstants.limitSwitchChannel);
 
@@ -84,7 +84,6 @@ public class Intake extends SubsystemBase {
 
     public void setDesiredArmState(ArmState newState) {
         armStateDesired = newState;
-        SmartDashboard.putString("Intake Arm DState", armStateDesired.toString());
     }
     public void changeRollerState (RollerState newState){
         rollerState = newState;
@@ -103,8 +102,8 @@ public class Intake extends SubsystemBase {
         return armMotor.getEncoder().getPosition();
     }
     public static enum ArmState {
-        HIGH,  // Shooting Level
-        LOW,   // Intake Level
+        HIGH,
+        LOW,
         LIMIT, // for the start of the match -- all the way up
         OFF
     }

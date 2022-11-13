@@ -20,6 +20,8 @@ public class TeleopSwerve extends CommandBase {
     private int strafeAxis;
     private int rotationAxis;
 
+    public boolean ix = false, iy = false;
+
     /**
      * Driver control
      */
@@ -37,8 +39,8 @@ public class TeleopSwerve extends CommandBase {
 
     @Override
     public void execute() {
-        double yAxis = -controller.getRawAxis(translationAxis);
-        double xAxis = -controller.getRawAxis(strafeAxis);
+        double yAxis = iy ? -1 : 1 * controller.getRawAxis(translationAxis);
+        double xAxis = ix ? -1 : 1 * controller.getRawAxis(strafeAxis);
         double rAxis = -controller.getRawAxis(rotationAxis) * 0.5; 
         
         /* Deadbands */
