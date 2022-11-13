@@ -3,7 +3,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ArmIntakeConstants;
+import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -19,35 +19,34 @@ public class ArmIntake extends SubsystemBase {
     private DigitalInput limitSwitch;
     
     public ArmIntake(){
-        armSpark = new CANSparkMax(ArmIntakeConstants.armSparkID, MotorType.kBrushless);
-        rollerSpark = new CANSparkMax(ArmIntakeConstants.rollerSparkID, MotorType.kBrushless);
-        armSpark.setInverted(ArmIntakeConstants.armInverted);
-        rollerSpark.setInverted(ArmIntakeConstants.rollerInverted);
-        armPID = new PIDController(ArmIntakeConstants.kp, ArmIntakeConstants.ki, ArmIntakeConstants.kd);
+        armSpark = new CANSparkMax(IntakeConstants.armSparkID, MotorType.kBrushless);
+        rollerSpark = new CANSparkMax(IntakeConstants.rollerSparkID, MotorType.kBrushless);
+        armSpark.setInverted(IntakeConstants.armInverted);
+        rollerSpark.setInverted(IntakeConstants.rollerInverted);
+        armPID = new PIDController(IntakeConstants.kp, IntakeConstants.ki, IntakeConstants.kd);
         armEncoder = armSpark.getEncoder();
         armState = ArmState.OFF;
         rollerState = RollerState.OFF;
-        limitSwitch = new DigitalInput(ArmIntakeConstants.limitSwitchChannel);
+        limitSwitch = new DigitalInput(IntakeConstants.limitSwitchChannel);
 
         armEncoder.setPosition(0);
     }
     @Override
     public void periodic(){
-        //System.out.println("Arm Limit Switch: " + limitSwitch.get());
         System.out.println("Arm Spark: " + armEncoder.getPosition());
         if (limitSwitch.get()) {
-            armEncoder.setPosition(ArmIntakeConstants.armLowSetpoint);
+            armEncoder.setPosition(IntakeConstants.armLowSetpoint);
         }
 
         switch(armState) {
             case HIGH:
-                setArmMotor(runArmPID(getArmSparkPosition(), ArmIntakeConstants.armHighSetpoint));
+                setArmMotor(runArmPID(getArmSparkPosition(), IntakeConstants.armHighSetpoint));
                 break;
             case LOW:
-                setArmMotor(runArmPID(getArmSparkPosition(), ArmIntakeConstants.armLowSetpoint));
+                setArmMotor(runArmPID(getArmSparkPosition(), IntakeConstants.armLowSetpoint));
                 break;
             case LIMIT:
-                setArmMotor(runArmPID(getArmSparkPosition(), ArmIntakeConstants.armLimitSetpoint));
+                setArmMotor(runArmPID(getArmSparkPosition(), IntakeConstants.armLimitSetpoint));
                 break;
             case OFF:
                 setArmMotor(0);
@@ -55,10 +54,10 @@ public class ArmIntake extends SubsystemBase {
         }
         switch(rollerState) {
             case FORWARD:
-                setRollerMotor(ArmIntakeConstants.rollerForwardSpeed);
+                setRollerMotor(IntakeConstants.rollerForwardSpeed);
                 break;
             case BACKWARD:
-                setRollerMotor(ArmIntakeConstants.rollerBackwardSpeed);
+                setRollerMotor(IntakeConstants.rollerBackwardSpeed);
                 break;
             case OFF:
                 setRollerMotor(0);

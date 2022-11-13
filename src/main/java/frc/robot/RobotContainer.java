@@ -13,13 +13,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.autos.TaxiAuto;
 import frc.robot.commands.DefenseModeCommand;
-<<<<<<< HEAD
 import frc.robot.commands.SetIntakeArmState;
-import frc.robot.commands.SetClimberArmState;
-=======
-import frc.robot.commands.SetArmState;
 import frc.robot.commands.ProgresslimberArmState;
->>>>>>> a2add9a8ee7f2363c6d902a45255682ba828fd9f
 import frc.robot.commands.SetClimberElevatorState;
 import frc.robot.commands.SetRollerState;
 import frc.robot.commands.TeleopSwerve;
