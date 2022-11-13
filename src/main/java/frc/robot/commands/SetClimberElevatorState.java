@@ -18,7 +18,6 @@ public class SetClimberElevatorState extends CommandBase {
 
     @Override
     public void initialize() {
-        //climber.setArmState(armState);
         s_Climber.setElevatorState(elevatorState);
     }
 

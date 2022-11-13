@@ -18,6 +18,7 @@ public class ProgresslimberArmState extends CommandBase {
 
     public ProgresslimberArmState(Climber m_climber) {
         s_Climber = m_climber;
+
         addRequirements(m_climber);
     }
 
@@ -35,7 +36,6 @@ public class ProgresslimberArmState extends CommandBase {
 
     @Override
     public void end(boolean i) {
-        super.end(i);
         if (i) s_Climber.setArmState(ArmState.OFF);
     }
 }

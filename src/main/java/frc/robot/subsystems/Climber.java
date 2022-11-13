@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class Climber extends SubsystemBase {
-
     private CANSparkMax lArm, rArm;
     private TalonFX lElev, rElev;
 

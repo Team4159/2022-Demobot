@@ -19,7 +19,7 @@ public class Intake extends SubsystemBase {
 
     private DigitalInput limitSwitch;
     
-    public Intake(){
+    public Intake() {
         armMotor = new CANSparkMax(IntakeConstants.armSparkID, MotorType.kBrushless);
         rollerSpark = new CANSparkMax(IntakeConstants.rollerSparkID, MotorType.kBrushless);
         armMotor.setInverted(IntakeConstants.armInverted);
