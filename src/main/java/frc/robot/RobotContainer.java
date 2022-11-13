@@ -14,7 +14,7 @@ import frc.robot.Constants.JoystickConstants;
 import frc.robot.autos.TaxiAuto;
 import frc.robot.commands.DefenseModeCommand;
 import frc.robot.commands.SetIntakeArmState;
-import frc.robot.commands.ProgresslimberArmState;
+import frc.robot.commands.ProgressClimberArmState;
 import frc.robot.commands.SetClimberElevatorState;
 import frc.robot.commands.SetRollerState;
 import frc.robot.commands.TeleopSwerve;
@@ -87,7 +87,6 @@ public class RobotContainer {
     defenseButton.whenPressed(new DefenseModeCommand(s_Swerve, true));
     defenseButton.whenReleased(new DefenseModeCommand(s_Swerve, false));
 
-
     /* Secondary Buttons */
     armButton.whenPressed(new SetIntakeArmState(s_ArmIntake, ArmState.LOW));
     armButton.whenPressed(new SetRollerState(s_ArmIntake, RollerState.FORWARD));
@@ -106,10 +105,7 @@ public class RobotContainer {
     raiseClimberButton.whenPressed(new SetClimberElevatorState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
     raiseClimberButton.whenReleased(new SetClimberElevatorState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
 
-    swingArmButton.whenHeld(new ProgresslimberArmState(s_Climber)) ;
-    // setArmStateButton.whenPressed(new SetClimberArmState(s_Climber, frc.robot.subsystems.Climber.ArmState.HIGH));
-    //swingArmButton.whenReleased(new SetClimberArmState(s_Climber, frc.robot.subsystems.Climber.ArmState.LOW));
-
+    swingArmButton.whenPressed(new ProgressClimberArmState(s_Climber));
   }
 
   /**
@@ -118,7 +114,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return new TaxiAuto(s_Swerve /*, s_ArmIntake*/);
   }
 }

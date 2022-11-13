@@ -38,29 +38,23 @@ public class Climber extends SubsystemBase {
         rArm.setIdleMode(IdleMode.kBrake);
 
         /* talons */
-        lElev = new TalonFX(
-                ClimberConstants.leftTalonID);
+        lElev = new TalonFX(ClimberConstants.leftTalonID);
         lElev.setInverted(ClimberConstants.leftTalonInverted);
         lElev.setNeutralMode(NeutralMode.Brake);
 
-        rElev = new TalonFX(
-                ClimberConstants.rightTalonID);
+        rElev = new TalonFX(ClimberConstants.rightTalonID);
         rElev.setInverted(ClimberConstants.rightTalonInverted);
         rElev.setNeutralMode(NeutralMode.Brake);
 
         /* PID Controllers */
         leftSparkPID = new PIDController(ClimberConstants.armkp, ClimberConstants.armki, ClimberConstants.armkd);
         rightSparkPID = new PIDController(ClimberConstants.armkp, ClimberConstants.armki, ClimberConstants.armkd);
-
-        leftTalonPID = new PIDController(ClimberConstants.elevatorkp, ClimberConstants.elevatorki,
-                ClimberConstants.elevatorkd);
-        rightTalonPID = new PIDController(ClimberConstants.elevatorkp, ClimberConstants.elevatorki,
-                ClimberConstants.elevatorkd);
+        leftTalonPID = new PIDController(ClimberConstants.elevatorkp, ClimberConstants.elevatorki, ClimberConstants.elevatorkd);
+        rightTalonPID = new PIDController(ClimberConstants.elevatorkp, ClimberConstants.elevatorki, ClimberConstants.elevatorkd);
 
         /* zero encoder values at robot init */
         lArm.getEncoder().setPosition(0);
         rArm.getEncoder().setPosition(0);
-
         lElev.setSelectedSensorPosition(0);
         rElev.setSelectedSensorPosition(0);
 
@@ -76,23 +70,27 @@ public class Climber extends SubsystemBase {
                 break;
             case LOW:
                 runSparks(
-                        leftSparkPID.calculate(getSparkPosition(lArm), ClimberConstants.armLowSetpoint),
-                        rightSparkPID.calculate(getSparkPosition(rArm), ClimberConstants.armLowSetpoint));
-                break;
-            case HIGH:
-                runSparks(
-                        leftSparkPID.calculate(getSparkPosition(lArm), ClimberConstants.armHighSetpoint),
-                        rightSparkPID.calculate(getSparkPosition(rArm), ClimberConstants.armHighSetpoint));
+                    leftSparkPID.calculate(getSparkPosition(lArm), ClimberConstants.armLowSetpoint),
+                    rightSparkPID.calculate(getSparkPosition(rArm), ClimberConstants.armLowSetpoint)
+                );
                 break;
             case MID:
                 runSparks(
-                        leftSparkPID.calculate(getSparkPosition(lArm), ClimberConstants.armMidSetpoint),
-                        rightSparkPID.calculate(getSparkPosition(rArm), ClimberConstants.armMidSetpoint));
+                    leftSparkPID.calculate(getSparkPosition(lArm), ClimberConstants.armMidSetpoint),
+                    rightSparkPID.calculate(getSparkPosition(rArm), ClimberConstants.armMidSetpoint)
+                );
+                break;
+            case HIGH:
+                runSparks(
+                    leftSparkPID.calculate(getSparkPosition(lArm), ClimberConstants.armHighSetpoint),
+                    rightSparkPID.calculate(getSparkPosition(rArm), ClimberConstants.armHighSetpoint)
+                );
                 break;
             case DOWN:
                 runSparks(
-                        leftSparkPID.calculate(getSparkPosition(lArm), ClimberConstants.armDownSetpoint),
-                        rightSparkPID.calculate(getSparkPosition(rArm), ClimberConstants.armDownSetpoint));
+                    leftSparkPID.calculate(getSparkPosition(lArm), ClimberConstants.armDownSetpoint),
+                    rightSparkPID.calculate(getSparkPosition(rArm), ClimberConstants.armDownSetpoint)
+                );
                 break;
         }
         // System.out.println("L: " + getSparkPosition(lArm) + "R: " +getSparkPosition(rArm) + );
@@ -119,12 +117,12 @@ public class Climber extends SubsystemBase {
     }
 
     public ArmState getActualArmState() {
-        double pos = (getSparkPosition(lArm) + getSparkPosition(rArm)) / 2;
+        double pos = (getSparkPosition(lArm) + getSparkPosition(rArm)) / 2; // average position because i'm lazy
 
         Map<ArmState, Double> diffs = Map.of(
-            ArmState.DOWN, Math.abs(pos),
-            ArmState.LOW, Math.abs(ClimberConstants.armLowSetpoint - pos),
-            ArmState.MID, Math.abs(ClimberConstants.armMidSetpoint - pos),
+            ArmState.DOWN, Math.abs(ClimberConstants.armDownSetpoint - pos),
+            ArmState.LOW,  Math.abs(ClimberConstants.armLowSetpoint - pos),
+            ArmState.MID,  Math.abs(ClimberConstants.armMidSetpoint - pos),
             ArmState.HIGH, Math.abs(ClimberConstants.armHighSetpoint - pos)
         );
 
