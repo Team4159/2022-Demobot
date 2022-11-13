@@ -9,13 +9,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.autos.TaxiAuto;
 import frc.robot.commands.DefenseModeCommand;
 import frc.robot.commands.SetArmState;
-import frc.robot.commands.SetClimberArmState;
+import frc.robot.commands.ProgresslimberArmState;
 import frc.robot.commands.SetClimberElevatorState;
 import frc.robot.commands.SetRollerState;
 import frc.robot.commands.TeleopSwerve;
@@ -58,7 +57,6 @@ public class RobotContainer {
 
   private final JoystickButton raiseClimberButton = new JoystickButton(secondary, JoystickConstants.Secondary.raiseClimber);
   private final JoystickButton swingArmButton = new JoystickButton(secondary, JoystickConstants.Secondary.swingArm);
-  private final JoystickButton setArmStateButton = new JoystickButton(secondary, JoystickConstants.Secondary.climbMode);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -108,16 +106,8 @@ public class RobotContainer {
     raiseClimberButton.whenPressed(new SetClimberElevatorState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.HIGH));
     raiseClimberButton.whenReleased(new SetClimberElevatorState(s_Climber, frc.robot.subsystems.Climber.ArmState.DOWN, ElevatorState.LOW));
 
-    swingArmButton.whenHeld(new SequentialCommandGroup(
-      new SetClimberArmState(s_Climber, Climber.ArmState.DOWN),
-      new SetClimberArmState(s_Climber, Climber.ArmState.HIGH),
-      new SetClimberArmState(s_Climber, Climber.ArmState.LOW),
-      new SetClimberArmState(s_Climber, Climber.ArmState.MID),
-      new SetClimberArmState(s_Climber, Climber.ArmState.LOW),
-      new SetClimberArmState(s_Climber, Climber.ArmState.MID),
-      new SetClimberArmState(s_Climber, Climber.ArmState.LOW)
-    ));
-    setArmStateButton.whenPressed(new SetClimberArmState(s_Climber, frc.robot.subsystems.Climber.ArmState.HIGH));
+    swingArmButton.whenHeld(new ProgresslimberArmState(s_Climber)) ;
+    // setArmStateButton.whenPressed(new SetClimberArmState(s_Climber, frc.robot.subsystems.Climber.ArmState.HIGH));
     //swingArmButton.whenReleased(new SetClimberArmState(s_Climber, frc.robot.subsystems.Climber.ArmState.LOW));
 
   }

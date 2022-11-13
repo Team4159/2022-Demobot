@@ -96,8 +96,7 @@ public class Climber extends SubsystemBase {
                         rightSparkPID.calculate(getSparkPosition(rArm), ClimberConstants.armDownSetpoint));
                 break;
         }
-        // System.out.println("L: " + getSparkPosition(leftSpark) + "R: " +
-        // getSparkPosition(rightSpark));
+        // System.out.println("L: " + getSparkPosition(lArm) + "R: " +getSparkPosition(rArm) + );
         switch (elevatorState) {
             case OFF:
                 runElev(0, 0);
@@ -124,6 +123,7 @@ public class Climber extends SubsystemBase {
         double pos = (getSparkPosition(lArm) + getSparkPosition(rArm)) / 2;
 
         Map<ArmState, Double> diffs = Map.of(
+            ArmState.DOWN, Math.abs(pos),
             ArmState.LOW, Math.abs(ClimberConstants.armLowSetpoint - pos),
             ArmState.MID, Math.abs(ClimberConstants.armMidSetpoint - pos),
             ArmState.HIGH, Math.abs(ClimberConstants.armHighSetpoint - pos)
@@ -134,7 +134,7 @@ public class Climber extends SubsystemBase {
             return a.getValue() < ClimberConstants.tolerance;
         }).reduce((Entry<ArmState, Double> a, Entry<ArmState, Double> b) -> { // find the ArmState with the setpoint that's closest to the current position
             return b.getValue() < a.getValue() ? b : a;
-        }).orElse(Map.entry(ArmState.OFF, 0d)) // if no ArmState is found, return 0
+        }).orElse(Map.entry(ArmState.OFF, -1d)) // if no ArmState is found, return 0
         .getKey(); // fetch the ArmState and disregard the difference
     }
 
@@ -160,6 +160,10 @@ public class Climber extends SubsystemBase {
 
     public void setElevatorState(ElevatorState newState) {
         elevatorState = newState;
+    }
+
+    public ArmState getDesiredArmState() {
+        return armStateDesired; 
     }
 
     public static enum ElevatorState {
