@@ -140,7 +140,7 @@ public final class Constants {
         public static final class Driver {
             public static final int driverPort = 0;
             
-            public static final int zeroGyro = 4;
+            public static final int zeroGyro = 5;
             public static final int defenseMode = 2;
         }
         
@@ -195,13 +195,13 @@ public final class Constants {
         public static final boolean leftSparkInverted = true;
         public static final boolean rightSparkInverted = false;
 
-        public static final double armkp = 0.05;
+        public static final double armkp = 0.02;
         public static final double armki = 0.1;
-        public static final double armkd = 0;
+        public static final double armkd = 0.0001;
 
         public static final double armDownSetpoint = 0;
-        public static final double armMidSetpoint = 14.5;
-        public static final double armLowSetpoint = 21;
+        public static final double armLowSetpoint = 14.5;
+        public static final double armMidSetpoint = 21;
         public static final double armHighSetpoint = 25.5;
         public static final double tolerance = 1;
 
