@@ -176,7 +176,7 @@ public class Climber extends SubsystemBase {
     }
 
 
-
+    // intake enums
     public static enum ElevatorState {
         DOWN,
         LOW,
